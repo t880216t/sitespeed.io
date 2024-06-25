@@ -1,5 +1,55 @@
 # CHANGELOG - sitespeed.io  (we use [semantic versioning](https://semver.org))
 
+## 34.3.1 - 2024-06-20
+### Fixed
+* The docker hub has had some problem and started to publish old images (as new!). That broke our latest tag to include chrome/edge//firefox 111. This release auto publish the latest one again.
+
+## 34.3.0 - 2024-06-20
+### Added
+* API: Show the URL/script name in the API call [#4195](https://github.com/sitespeedio/sitespeed.io/pull/4195)
+* Update WebPageReplay binaries [#4196](https://github.com/sitespeedio/sitespeed.io/pull/4196).
+
+## 34.2.2 - 2024-06-18
+### Fixed
+* Make it possible to disable the API. In some cases where you extends another configuration file, you could end up in a API loop where the API calls the API [#4191](https://github.com/sitespeedio/sitespeed.io/pull/4191).
+
+## 34.2.1 - 2024-06-17
+### Fixed
+* API: safer parsing if something fail to get better error messages [#4188](https://github.com/sitespeedio/sitespeed.io/pull/4188).
+
+## 34.2.0 - 2024-06-14
+
+### Added
+* Updated to Browsertime 22.5.0 [#4187](https://github.com/sitespeedio/sitespeed.io/pull/4187).
+* Updated to Firefox 127 and Chrome/Chromedriver 126 [#4185](https://github.com/sitespeedio/sitespeed.io/pull/4185)
+
+### Fixed
+* Fix for InfluxDBv2 to send annotations. Thank you [pavel bairov](https://github.com/Amerousful) for PR [#4175](https://github.com/sitespeedio/sitespeed.io/pull/4175).
+
+* Fix log output when using `--preWarmServer`, thank you [ThimoCap](https://github.com/ThimoCap) for PR [#4183](https://github.com/sitespeedio/sitespeed.io/pull/4183)
+
+## 34.1.2 - 2024-06-12
+### Fixed
+* Using `--preWarmServer` resulted in trying to use an  Android phone to prewarm. Fixed in [#4182](https://github.com/sitespeedio/sitespeed.io/pull/4182).
+
+## 34.1.1 - 2024-06-07
+### Fixed
+* Enabling extra profile run/video run didn't stop the Browsertime engine in the correct place. PR [#4179](https://github.com/sitespeedio/sitespeed.io/pull/4179) fixes that.
+
+## 34.1.0 - 2024-06-06
+### Added
+* Add `--enableVideoRun`. You can use it together with `--video false --visualMetrics true` to do one extra run where the video is kept. This is useful for tests against replay proxies [#4177](https://github.com/sitespeedio/sitespeed.io/pull/4177).
+
+## 34.0.3 - 2024-06-05
+
+### Fixed
+* Make sure extra options are passed on to S3 [#4176](https://github.com/sitespeedio/sitespeed.io/pull/4176).
+
+## 34.0.2 - 2024-06-04
+
+### Fixed
+* Update to Pug 3.0.3 [#4172](https://github.com/sitespeedio/sitespeed.io/pull/4172).
+
 ## 34.0.1 - 2024-05-30
 
 ### Fixed
@@ -9,11 +59,11 @@
 
 ### Breaking
 
-* Woho! There's now a way to deploy your own version of sitespeed.io online for your own testing using [onlinetest)[https://github.com/sitespeedio/onlinetest]! It has a HTML GUI and an API that you can use using sitespeed.io command line. There's one server part (the frontend and the API) and a testrunner part. You can run desktop, emulated mobile and Android test. I do not host a global version but I worked hard to make it easy to host yourself. I still work on the documentation but feel free to start to try it out before all documentation is finished :) If you have quick question and need help, please use the [Slack channel](https://join.slack.com/t/sitespeedio/shared_invite/zt-296jzr7qs-d6DId2KpEnMPJSQ8_R~WFw). If you have more complicated problems, please feel free to create issues [here](https://github.com/sitespeedio/onlinetest/issues/new).
+* Woho! There's now a way to deploy your own version of sitespeed.io online for your own testing using [onlinetest][https://github.com/sitespeedio/onlinetest]! It has a HTML GUI and an API that you can use using sitespeed.io command line. There's one server part (the frontend and the API) and a testrunner part. You can run desktop, emulated mobile and Android test. I do not host a global version but I worked hard to make it easy to host yourself. I still work on the documentation but feel free to start to try it out before all documentation is finished :) If you have quick question and need help, please use the [Slack channel](https://join.slack.com/t/sitespeedio/shared_invite/zt-296jzr7qs-d6DId2KpEnMPJSQ8_R~WFw). If you have more complicated problems, please feel free to create issues [here](https://github.com/sitespeedio/onlinetest/issues/new).
  
 * With this release we remove all dependencies to WebPageTest [#4085](https://github.com/sitespeedio/sitespeed.io/pull/4085). You are only affected if you used the [plugin-webpagetest](https://github.com/sitespeedio/plugin-webpagetest) or the +webpagetest Docker container. If you still want to use WebPageTest with sitespeed.io you can build something on the archived [plugin-webpagetest](https://github.com/sitespeedio/plugin-webpagetest).
 
-* The S3 plugin has been upgraded to @aws-sdk/client-s3 v3 [#4138](https://github.com/sitespeedio/sitespeed.io/pull/4138). If you are using the S3 plugin and not set region, that will now fail. The v2 version of the aws-sdk used us-east-1 region as default, but v3 has removed the default setting. If you didn't used to set region you can add `--s3.region us-east-1` and it will work as before. If you do not do that, the uploads to S3 will fail.
+* The S3 plugin has been upgraded to @aws-sdk/client-s3 v3 [#4138](https://github.com/sitespeedio/sitespeed.io/pull/4138). If you are using the S3 plugin and not set region, that will now fail. The v2 version of the aws-sdk used us-east-1 region as default, but v3 has removed the default setting. If you didn't used to set region you can add `--s3.region us-east-1` and it will work as before. If you do not do that, the uploads to S3 will fail. With v3 your `endpoint` need to start with http/https.
 
 * The -plus1 Docker container now has plugin-lighthouse and plugin-gpsi installed from npm instead of the git repository. It will work as before, but if you want to disable one of them, that has changed. To not run the GPSI plugin add `--plugins.remove @sitespeed.io/plugin-gpsi` and to disble Lighthouse you add `--plugins.remove @sitespeed.io/plugin-lighthouse`.
 

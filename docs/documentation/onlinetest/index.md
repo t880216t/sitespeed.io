@@ -24,7 +24,7 @@ To get started, you will need the sitespeed.io server, at least one sitespeed.io
 
 ![The setup]({{site.baseurl}}/img/onlinetestsetup.png)
 {: .img-thumbnail}
-
+e
 ## Installation
 
 For small businesses needing to test one or a few websites, you can deploy everything on a single server. For large companies planning to run numerous tests, you can distribute the components across multiple servers. If you plan to run tests from various locations worldwide, ensure the web GUI, database, and Redis are located together in the same region.
@@ -237,7 +237,7 @@ When you set useDocker to true, the Docker container configured in:
 docker:
   container: "sitespeedio/sitespeed.io:latest"
 ```
-is used.
+is used. If you try the Docker container on your local machine, remember to change the settings for [how you upload the result](https://github.com/sitespeedio/onlinetest/blob/main/server/config/sitespeed.json) since localhost/127.0.0.1 do not work automatically inside the Docker container. Use your host IP or *host.docker.internal* if you are on a Mac.
 
 The connectivity array lists the different connectivity options you will see in the drop-down menu in the GUI.
 
@@ -291,6 +291,12 @@ docker:
   container: "sitespeedio/sitespeed.io:latest"
 ```
 
+If you try out the Docker containers locally on your machine, you need to remember remember that localhost inside the container isn't automatically the same as localhost on the server. You can read about it [here](https://www.sitespeed.io/documentation/sitespeed.io/docker/#access-localhost).
+
+That means if you run everything locally and want to use sitespeed.io docker containers, you need to set `--s3.endpoint` to something else than 127.0.0.1. By default that is set [here](https://github.com/sitespeedio/onlinetest/blob/main/server/config/sitespeed.json).
+
+On Mac you can use `--s3.endpoint http://host.docker.internal:9000` and on Linux you can use your actual IP. You can see how that is used in [one of our GitHUb Actions](https://github.com/sitespeedio/onlinetest/blob/main/.github/workflows/docker.yml#L45).
+
 ## Dependencies
 
 To ensure the smooth operation of your sitespeed.io server and test runners, there are several dependencies you need to configure. These dependencies facilitate communication between components, data storage, and result processing. Here’s a brief overview of why these dependencies are necessary:
@@ -323,17 +329,17 @@ If you also use MinIO, make sure to configure how long the data will be stored. 
 Here's a checklist of things to consider when pushing to production:
 
 1. **Change all the default passwords**:
-   - Do this for Redis, PostgreSQL, Admin, and Basic Auth.
-
-2. **Limit your instance**:
+   - Do this for Redis, PostgreSQL, Admin, Minio (or what you use) and Basic Auth.
+2. **Change settings for where you upload your result**
+   - Remember to change the [default settings](https://github.com/sitespeedio/onlinetest/blob/main/server/config/sitespeed.json) on where you upload the data and how you access it.
+3. **Limit your instance**:
    - Use Basic Auth for adding tests through the web GUI.
    - Set a secret key for adding tests through the API.
    - Use a regular expression that needs to match the domain you want to test.
    - Disable search.
    - Disable adding tests through the web GUI.
-
-3. **Data retention**:
-   - If you use S3, make sure to configure how long the data will be kept.
+4. **Data retention**:
+   - If you use S3 (or Minio), make sure to configure how long the data will be kept.
    - Add a job to your PostgreSQL database to remove data older than X days. You can find an example script [here](https://github.com/sitespeedio/onlinetest/blob/main/server/database/delete/delete.sql).
 
 # Using the API
@@ -348,34 +354,23 @@ There are two parameters that you need to use:
 
 You also have the following options:
 
-- `--api.key`
-  - The API key to use. You configure the key in the server configuration.
+- `--api.key`  - The API key to use. You configure the key in the server configuration.
 
-- `--api.action`
-  - The type of API call you want to make:
-    - `add`: Add a test.
-    - `addAndGetResult`: Add a test and wait for the result.
-    - `get`: Get the result of a test.
+- `--api.action` - The type of API call you want to make:
+  - `add`: Add a test.
+  - `addAndGetResult`: Add a test and wait for the result.
+  - `get`: Get the result of a test.
   - To get the result, make sure you add the ID using `--api.id`.
   - [choices: "add", "addAndGetResult", "get"] [default: "addAndGetResult"]
 
-- `--api.silent`
-  - Set to `true` if you do not want to log anything from the communication between the API and the server.
-  - [boolean] [default: false]
+- `--api.silent` - Set to `true` if you do not want to log anything from the communication between the API and the server.
 
-- `--api.port`
-  - The port for the API.
+- `--api.port` - The port for the API.
 
-- `--api.id`
-  - The ID of the test. Use it when you want to get the test result.
-  - [string]
+- `--api.id` - The ID of the test. Use it when you want to get the test result.
 
-- `--api.label`
-  - Add a label to your test.
-  - [string]
+- `--api.label` - Add a label to your test.
 
-- `--api.priority`
-  - The priority of the test. Highest priority is 1. The default is 10.
+- `--api.priority` - The priority of the test. Highest priority is 1. The default is 10.
 
-- `--api.json`
-  - Output the result as JSON.
+- `--api.json` - Output the result as JSON.
