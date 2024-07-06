@@ -1,5 +1,22 @@
 # CHANGELOG - sitespeed.io  (we use [semantic versioning](https://semver.org))
 
+## 34.3.5 - 2024-07-02
+### Fixed
+* The fix for CLS and LCP in 34.3.4 faulty set those to false by default, changing the default behaviour. Fixed in [#4205](https://github.com/sitespeedio/sitespeed.io/pull/4205)
+
+## 34.3.4 - 2024-06-25
+### Fixed
+* Expose command line parameters to disable CLS and LCP screenshots [#4201](https://github.com/sitespeedio/sitespeed.io/pull/4201).
+
+## 34.3.3 - 2024-06-24
+### Fixed
+* Updated to Browsertime 25.5.2 that has updated versions of Selenium WebDriver and correct export for scripting.
+* API: Copy Browsertime setting from the option object to the API. There cases where you use a configuration file, override it with CLI parameters and the cli parameters didn't override the configuration file. That is fixed now for Browsertime configurations [#4200](https://github.com/sitespeedio/sitespeed.io/pull/4200).
+
+## 34.3.2 - 2024-06-23
+### Fixed
+* API: Remove extends from the configuration to make sure that testrunners ddo not try to extend configuration [#4198](https://github.com/sitespeedio/sitespeed.io/pull/4198).
+
 ## 34.3.1 - 2024-06-20
 ### Fixed
 * The docker hub has had some problem and started to publish old images (as new!). That broke our latest tag to include chrome/edge//firefox 111. This release auto publish the latest one again.
