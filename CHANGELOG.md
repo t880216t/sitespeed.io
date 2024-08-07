@@ -1,5 +1,55 @@
 # CHANGELOG - sitespeed.io  (we use [semantic versioning](https://semver.org))
 
+##  34.9.0 - 2024-07-30
+### Added
+* Browsertime 22.8.0 that disables the choose search engine screen on Chrome 127 and updated Edgedriver to 126 [#4244](https://github.com/sitespeedio/sitespeed.io/pull/4244).
+
+### Fixed
+* Added extra guard when you disables screenshots [#4245](https://github.com/sitespeedio/sitespeed.io/pull/4245).
+* Axe core 4.10.0 [#4246](https://github.com/sitespeedio/sitespeed.io/pull/4246).
+
+## 34.8.2 - 2024-07-29
+### Fixed
+* WebPageReplay: Fix for reading configuration. Reading a saved configuration didn't handle camel case correctly, creating arrays for single values [#4242](https://github.com/sitespeedio/sitespeed.io/pull/4242).
+
+## 34.8.1 - 2024-07-27
+### Fixed
+* Add missing slug for influxdb, thank you [pavel bairov](https://github.com/Amerousful) for PR [#4240](https://github.com/sitespeedio/sitespeed.io/pull/4240).
+
+## 34.8.0 - 2024-07-26
+### Added
+* Chrome 127, Chromedriver 127 and Browsertime 22.7.0 [#4239](https://github.com/sitespeedio/sitespeed.io/pull/4239).
+
+### Fixed
+* InfluxDB 2.x, Annotations. Send tags for filtering, thank you [pavel bairov](https://github.com/Amerousful) for PR [#4197](https://github.com/sitespeedio/sitespeed.io/pull/4197).
+
+## 34.7.1 - 2024-07-20
+### Fixed
+* Fix so the link to the geckoprofiler data works/shows again [#4234](https://github.com/sitespeedio/sitespeed.io/pull/4234).
+
+## 34.7.0 - 2024-07-15
+### Added
+* Update to Browsertime [22.6.0](https://github.com/sitespeedio/browsertime/blob/main/CHANGELOG.md#2260---2024-07-15) [#4226](https://github.com/sitespeedio/sitespeed.io/pull/4226).
+* Crux: Push navigation types and form factor data by default to TSDB [#4227](https://github.com/sitespeedio/sitespeed.io/pull/4227).
+
+## 34.6.0 - 2024-07-12
+### Added
+* Crux: Include RTT p75 [#4225](https://github.com/sitespeedio/sitespeed.io/pull/4225).
+
+## 34.5.0 - 2024-07-12
+### Added
+* Crux: Add navigation types, and form factors. Fix colors to align with Grafana colors and fix broken legend colors [#4223](https://github.com/sitespeedio/sitespeed.io/pull/4223).
+* Sustainable: Make it possible to choose sustainable model version (for model swd). To use the latest version for add: `--sustainable.model swd --sustainable.modelVersion 4` [#4224](https://github.com/sitespeedio/sitespeed.io/pull/4224).
+
+## 34.4.0 - 2024-07-09
+### Added
+* Upgraded to Firefox 128 and Edge 126 in the Docker container [#4222](https://github.com/sitespeedio/sitespeed.io/pull/4222).
+
+### Fixed
+* Show correct LCP and CLS image in each run page [#4221](https://github.com/sitespeedio/sitespeed.io/pull/4221).
+* Update Browsertime [#4210](https://github.com/sitespeedio/sitespeed.io/pull/4210).
+* Update minor dependencies and developer dependencies: co2.js [#4206](https://github.com/sitespeedio/sitespeed.io/pull/4206), uuid [#4207](https://github.com/sitespeedio/sitespeed.io/pull/4207), s3 [#4208](https://github.com/sitespeedio/sitespeed.io/pull/4208), eslint [#4211](https://github.com/sitespeedio/sitespeed.io/pull/4211), ava, jsdoc, sass [#4212](https://github.com/sitespeedio/sitespeed.io/pull/4212), dayjs [#4214](https://github.com/sitespeedio/sitespeed.io/pull/4214), p-limit [#4215](https://github.com/sitespeedio/sitespeed.io/pull/4215), os-name [#4216](https://github.com/sitespeedio/sitespeed.io/pull/4216), tape [#4219](https://github.com/sitespeedio/sitespeed.io/pull/4219) and p-limit [#4220](https://github.com/sitespeedio/sitespeed.io/pull/4220).
+
 ## 34.3.5 - 2024-07-02
 ### Fixed
 * The fix for CLS and LCP in 34.3.4 faulty set those to false by default, changing the default behaviour. Fixed in [#4205](https://github.com/sitespeedio/sitespeed.io/pull/4205)
